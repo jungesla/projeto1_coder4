@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
     <header>
-        <h1>Bem-vindo ao nosso site de produtos</h1>
-        {{#if user}}
-            <a href="/logout" class="btn btn-primary">Logout</a>
-        {{else}}
-            <a href="/login" class="btn btn-primary">Login</a>
-        {{/if}}
+        <h1>Loja</h1>
+        <nav>
+            <a href="/">Página Inicial</a>
+            <a href="/products">Produtos</a>
+            <a href="/cart">Carrinho</a>
+            {{#if user}}
+                <a href="/profile">{{user.username}}</a>
+                <a href="/logout">Sair</a>
+            {{else}}
+                <a href="auth/login">Entrar</a>
+            {{/if}}
+        </nav>
     </header>
     <main>
         {{{body}}}
     </main>
     <footer>
-        <p>&copy;CH</p>
+        <p>&copy; 2024</p>
     </footer>
 </body>
 </html>

@@ -1,15 +1,44 @@
-<h1>{{product.title}}</h1>
-<p>{{product.description}}</p>
-<p>Preço: {{product.price}}</p>
-<p>Categoria: {{product.category}}</p>
-<p>Status: {{product.status}}</p>
-<button onclick="addToCart('{{product._id}}')">Adicionar ao carrinho</button>
-<script>
-    function addToCart(productId) {
-        const socket = io();
-        socket.emit('addToCart', { productId: productId, quantity: 1 });
-        socket.on('cartUpdated', (data) => {
-            alert(data.message);
-        });
-    }
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{product.name}} - Detalhes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Detalhes do Produto</h1>
+        <nav>
+            <a href="/">Página Inicial</a>
+            <a href="/products">Todos os Produtos</a>
+            <a href="/cart">Carrinho</a>
+            {{#if user}}
+                <a href="/profile">{{user.name}}</a>
+                <a href="/logout">Sair</a>
+            {{else}}
+                <a href="/login">Entrar</a>
+            {{/if}}
+        </nav>
+    </header>
+    <main>
+        <section class="product-details">
+            <h2>{{product.name}}</h2>
+            <img src="{{product.imageUrl}}" alt="{{product.name}}">
+            <p>{{product.description}}</p>
+            <p>Preço: R$ {{product.price}}</p>
+            <p>Categoria: {{product.category}}</p>
+            <p>Estoque: {{product.stock}}</p>
+            <form action="/cart/add" method="POST">
+                <input type="hidden" name="product" value="{{product._id}}">
+                <label for="quantity">Quantidade:</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="{{product.stock}}" required>
+                <button type="submit">Adicionar ao Carrinho</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
+</body>
+</html>
